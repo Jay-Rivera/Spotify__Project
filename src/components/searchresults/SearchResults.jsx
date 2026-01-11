@@ -1,12 +1,12 @@
 import React from "react";
-import Track from "../track/Track";
+import Tracklist from "../tracklist/Tracklist";
 
 function SearchResults({ tracks }) {
   return (
-    <>
+    <div className="results">
       <div>Results:</div>
-      <Track />
-    </>
+      <Tracklist tracks={tracks} />
+    </div>
   );
 }
 

@@ -44,7 +44,7 @@ function App() {
   const search = (name) => {
     const nameToSearch = name.toLowerCase();
     const filterSongs = songs.filter((song) =>
-      song.name.toLocaleLowerCase().includes(nameToSearch)
+      song.name.toLowerCase().includes(nameToSearch)
     );
 
     setSearchResults(filterSongs);
@@ -57,7 +57,7 @@ function App() {
         <h1>JAMMING</h1>
         <SearchBar onSearch={search} />
       </main>
-      <section>
+      <section className="resultsContainer">
         <SearchResults tracks={searchResults} />
         <Playlist />
       </section>
