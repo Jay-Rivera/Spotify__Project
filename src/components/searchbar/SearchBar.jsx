@@ -1,14 +1,23 @@
 import { useState } from "react";
 
-function SearchBar({ onSearch }) {
+function SearchBar(props) {
   const [name, setName] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
     setName(value);
-    onSearch(value);
+    props.onSearch(value);
   };
 
+  const [term, setTerm] = useState("");
+
+  function passTerm() {
+    props.onSearch(term);
+  }
+
+  function handleTermChange(e) {
+    setTerm(e.target.value);
+  }
   return (
     <>
       <input
@@ -16,9 +25,9 @@ function SearchBar({ onSearch }) {
         name="songName"
         placeholder="Search for a Song"
         value={name}
-        onChange={handleChange}
+        onChange={handleTermChange}
       />
-      <button onClick={() => onSearch(name)}>Search</button>
+      <button onClick={passTerm}>Search</button>
     </>
   );
 }

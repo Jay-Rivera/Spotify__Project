@@ -40,7 +40,10 @@ const songs = [
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
+  const [playlistName, setPlaylistName] = useState("New Playlist");
+  const [playlistTrack, setPlaylistTrack] = useState([]);
 
+  // TODO: Update this for the API Call
   const search = (name) => {
     const nameToSearch = name.toLowerCase();
     const filterSongs = songs.filter((song) =>
@@ -50,6 +53,35 @@ function App() {
     setSearchResults(filterSongs);
   };
 
+  // Todo: Update playlist name function. Create a function to pass to playlist prop to update name.
+  const updatePlaylistName = (name) => {
+    setPlaylistName(name);
+  };
+
+  // Todo: Add track to playlist from the search results
+  const addTrack = (track) => {
+    if (playlistTrack.some((currentTrack) => currentTrack.id === track.id)) {
+      return;
+    } else {
+      setPlaylistTrack((prevTracks) => [...prevTracks, track]);
+    }
+  };
+  //Todo: Remove track from playlist
+
+  const removeTrack = (track) => {
+    setPlaylistTrack((prevTracks) =>
+      prevTracks.filter((currentTrack) => currentTrack.id !== track.id)
+    );
+  };
+
+  function savePlaylist() {
+    // 1. Create an array of track URIs from the playlistTrack  state
+    const trackURIs = playlistTrack.map((track) => track.uri);
+  }
+
+  // function search(term) {
+  //   console.log(term);
+  // }
   return (
     <>
       <NavBar />
@@ -58,8 +90,18 @@ function App() {
         <SearchBar onSearch={search} />
       </main>
       <section className="resultsContainer">
-        <SearchResults tracks={searchResults} />
-        <Playlist />
+        <SearchResults
+          tracks={searchResults}
+          onAdd={addTrack}
+          isRemoval={true}
+        />
+        <Playlist
+          playlistName={playlistName}
+          playlistTrack={playlistTrack}
+          updatePlaylistName={updatePlaylistName}
+          onRemove={removeTrack}
+          onSave={savePlaylist}
+        />
       </section>
     </>
   );
